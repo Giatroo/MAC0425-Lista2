@@ -13,20 +13,20 @@ print(f'As recompensas são:\n{r}\n')
 q_value = np.zeros((r.shape[0], r.shape[1], 4))
 
 actions = {
-    0: np.asarray([-1, 0]),  # subir
-    1: np.asarray([1, 0]),  # descer
-    2: np.asarray([0, -1]),  # esquerda
-    3: np.asarray([0, 1]),  # direita
+    0: np.asarray([0, -1]),  # esquerda
+    1: np.asarray([-1, 0]),  # subir
+    2: np.asarray([0, 1]),  # direita
+    3: np.asarray([1, 0]),  # descer
 }
 actions_str = {
-    0: "^",
-    1: "v",
-    2: "<",
-    3: ">",
+    0: "<",
+    1: "^",
+    2: ">",
+    3: "v",
 }
 
 learning_rate = 1
-discount = 1
+discount = 0.5
 # discount = 0.89
 
 def update_q_values(q_value):

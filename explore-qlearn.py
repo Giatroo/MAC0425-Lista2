@@ -30,7 +30,7 @@ actions_str = {
 }
 
 ALPHA = 1
-GAMMA = 0.2
+GAMMA = 0.9
 EPS = 0.3  # chances of doing something different
 
 
@@ -48,7 +48,6 @@ def is_inside(loc, matrix):
 
 def update_q_values(q_values, cur_state, action_taken, reward):
     # If the state is a final state, the q-value is the reward
-    print(cur_state)
     if cur_state in final_states:
         q_values[(*cur_state, action_taken)] = r[cur_state]
         return q_values
@@ -60,12 +59,9 @@ def update_q_values(q_values, cur_state, action_taken, reward):
 
     # updating the q-value
     max_action_q = np.max(q_values[new_state])
-    #  print(f'max_action_q = {max_action_q}')
     cur_q = q_values[(*cur_state, action_taken)]
-    #  print(f'cur_q = {cur_q}')
 
     new_q = (1 - ALPHA) * cur_q + ALPHA * (reward + GAMMA * max_action_q)
-    #  print(f'new_q = {new_q}')
     q_values[(*cur_state, action_taken)] = new_q
     return q_values
 
@@ -94,10 +90,6 @@ def iteration(cur_state, q_values, debug=True):
     # after choosing the action, there are chances that the agent will not go to
     # the right direction (the one it chosen).
     rand_num = rng.random()
-    print(f"Estou em {cur_state}.")
-    print(
-        f"Queria ir para {cur_state + actions[chosen_action]} ({actions_str[chosen_action]})"
-    )
     if rand_num < 0.8:
         new_state = cur_state + actions[chosen_action]
     elif rand_num < 0.9:
@@ -112,7 +104,6 @@ def iteration(cur_state, q_values, debug=True):
 
     reward = r[tuple(cur_state)]
 
-    print(f"Foi para {new_state} com reward {reward}")
     return tuple(new_state), update_q_values(q_values, cur_state, chosen_action, reward)
 
 
